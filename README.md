@@ -50,15 +50,6 @@ Deletes the shader program and associated resources.
 ### `gl`
 The WebGL context associated to the shader
 
-### `handle`
-A handle to the underlying WebGL program object
-
-### `vertexShader`
-A handle to the underlying WebGL fragment shader object
-
-### `fragmentShader`
-A handle to the underlying WebGL vertex shader object
-
 ## Uniforms
 The uniforms for the shader program are packaged up as properties in the `shader.uniforms` object.  For example, to update a scalar uniform you can just assign to it:
 
@@ -121,9 +112,7 @@ Or you can read the currently bound location back by just accessing it:
 console.log(attrib.location)
 ```
 
-Internally, these methods just call [`gl.bindAttribLocation`](http://www.khronos.org/opengles/sdk/docs/man/xhtml/glBindAttribLocation.xml) and access the stored location.
-
-**WARNING** Changing the attribute location requires recompiling the program.  Do not dynamically modify this variable in your render loop.
+**WARNING** Changing the attribute location requires recompiling the program. This recompilation is deferred until the next call to `.bind()`
 
 ### `attrib.pointer([type, normalized, stride, offset])`
 A shortcut for `gl.vertexAttribPointer`/`gl.enableVertexAttribArray`.  See the [OpenGL man page for details on how this works](http://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml).  The main difference here is that the WebGL context, size and index are known and so these parameters are bound.
@@ -142,7 +131,6 @@ console.log(shader.types)
 ```
 
 This reflects the uniform and attribute parameters that were passed to the shader constructor.
-
 
 ## Credits
 (c) 2013 Mikola Lysenko. MIT License
